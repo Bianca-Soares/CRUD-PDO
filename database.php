@@ -1,7 +1,7 @@
 ﻿<?php
-    require('config.php');
+    require('conexao.php');
 // INSERT
-    $query = $pdo->prepare("SELECT INTO tb_pessoa(nome_pessoa, telefone, email) VALUES (n:, t:, e: )"); 
+    $query = $conexaoPDO->prepare("INSERT INTO tb_pessoa(nome_pessoa, telefone, email) VALUES (n:, t:, e: )"); 
  
     $query->bindValue(":n", "Diana");
     $query->bindValue(":t", "91 9999-9999");
@@ -9,15 +9,12 @@
 
     $query->execute();
 
-
-
-//  $pdo->query("INSERT INTO tb_pessoa(nome_pessoa, telefone, email) VALUES('Estevão', '61 9999-9999', 'estevao@gmail.com')");
-
+    $conexaoPDO->query("INSERT INTO tb_pessoa(nome_pessoa, telefone, email) VALUES('João', '61 9999-9999', 'estevao@gmail.com')");
 
 // SELECT por id
 
-    $query = $pdo->prepare("SELECT * FROM nome_pessoa WHERE id_pessoa = :id");
-    $query->bindValue(":id", 4);
+    $query = $conexaoPDO->prepare("SELECT * FROM tb_pessoa WHERE id_pessoa = :id");
+    $query->bindValue(":id", 2);
 	    
     $query->execute();
     $resultado = $query->fetch(PDO::FETCH_ASSOC);//converte em array uma única linha da query
@@ -28,15 +25,14 @@
 
 // SELECT todos
 
-    $query = $pdo->prepare("SELECT * FROM nome_pessoa WHERE id_pessoa = :id");
-    $query->bindValue(":id", 4);
+    $query = $conexaoPDO->prepare("SELECT * FROM tb_pessoa");
     
     $query->execute();
     $resultado = $query->fetchAll(PDO::FETCH_ASSOC);
     
-    foreach($resultado as $key => $value){
-	echo $key.": ".$value."<br>";
+    foreach($resultado as $key => $value)
+    {
+	// echo $key.": <br>".$value;
     }
-    
     
 ?>
